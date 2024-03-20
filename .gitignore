@@ -1,0 +1,5 @@
+# Compiled / DLL files
+__pycache__/
+
+# Environment
+todosenv/
