@@ -43,7 +43,13 @@ async def read_all_users(user: UserDepend, db: CommonDepends):
 async def delete_task_by_admin(user: UserDepend, db: CommonDepends, task_id: int = Path(gt=0)):
     if user is None or user.get("role") != "admin":
         user_unauthorized_error()
+
     task = db.query(Tasks).filter(Tasks.id == task_id).first()
     if task:
         db.query(Tasks).filter(Tasks.id == task_id).delete()
         db.commit()
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"Task with id {task_id} does not exist"
+        )

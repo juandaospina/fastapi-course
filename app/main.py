@@ -1,9 +1,10 @@
 from fastapi import FastAPI
 
-from app.models import *
+from app.models import * 
 from app.config.db import engine
 from metadata import tags_metadata
 from app.routers import auth, task, admin, user
+from app.tests.test_main import test_router
 
 app = FastAPI(openapi_tags=tags_metadata)
 
@@ -11,8 +12,11 @@ app = FastAPI(openapi_tags=tags_metadata)
 """
 Base.metadata.create_all(bind=engine)
 
+
 app.include_router(auth.router)
 app.include_router(task.router)
 app.include_router(admin.router)
 app.include_router(user.router)
+# test
+app.include_router(test_router)
 
